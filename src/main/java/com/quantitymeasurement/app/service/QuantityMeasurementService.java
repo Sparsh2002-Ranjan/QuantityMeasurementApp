@@ -1,14 +1,13 @@
 package com.quantitymeasurement.app.service;
 
+import com.quantitymeasurement.app.core.Quantity;
 import com.quantitymeasurement.app.dto.QuantityInputDTO;
 import com.quantitymeasurement.app.dto.ResponseDTO;
 import com.quantitymeasurement.app.entity.QuantityMeasurementEntity;
 import com.quantitymeasurement.app.repository.IQuantityMeasurementRepository;
+import com.quantitymeasurement.app.units.LengthUnit;
 
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class QuantityMeasurementService implements IQuantityMeasurementService {
@@ -20,13 +19,27 @@ public class QuantityMeasurementService implements IQuantityMeasurementService {
         this.repository.initializeDatabase();
     }
 
+    private Quantity<LengthUnit> buildQuantity(double value, String unit) {
+        return new Quantity<>(
+                value,
+                LengthUnit.valueOf(unit.toUpperCase())
+        );
+    }
+
     @Override
     public ResponseDTO compareQuantities(QuantityInputDTO dto) {
 
-        double value1 = dto.getThisQuantityDTO().getValue();
-        double value2 = dto.getThatQuantityDTO().getValue();
+        Quantity<LengthUnit> q1 = buildQuantity(
+                dto.getThisQuantityDTO().getValue(),
+                dto.getThisQuantityDTO().getUnit()
+        );
 
-        boolean result = value1 == value2;
+        Quantity<LengthUnit> q2 = buildQuantity(
+                dto.getThatQuantityDTO().getValue(),
+                dto.getThatQuantityDTO().getUnit()
+        );
+
+        boolean result = q1.equals(q2);
 
         ResponseDTO response = new ResponseDTO();
         response.setResultString(String.valueOf(result));
@@ -34,8 +47,66 @@ public class QuantityMeasurementService implements IQuantityMeasurementService {
 
         QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
         entity.setOperation("COMPARE");
-        entity.setOperand1(value1 + " " + dto.getThisQuantityDTO().getUnit());
-        entity.setOperand2(value2 + " " + dto.getThatQuantityDTO().getUnit());
+        entity.setOperand1(dto.getThisQuantityDTO().getValue() + " " + dto.getThisQuantityDTO().getUnit());
+        entity.setOperand2(dto.getThatQuantityDTO().getValue() + " " + dto.getThatQuantityDTO().getUnit());
+        entity.setResult(String.valueOf(result));
+
+        repository.save(entity);
+
+        return response;
+    }
+
+    @Override
+    public ResponseDTO addQuantities(QuantityInputDTO dto) {
+
+        Quantity<LengthUnit> q1 = buildQuantity(
+                dto.getThisQuantityDTO().getValue(),
+                dto.getThisQuantityDTO().getUnit()
+        );
+
+        Quantity<LengthUnit> q2 = buildQuantity(
+                dto.getThatQuantityDTO().getValue(),
+                dto.getThatQuantityDTO().getUnit()
+        );
+
+        Quantity<LengthUnit> resultQuantity = q1.add(q2);
+
+        ResponseDTO response = new ResponseDTO();
+        response.setResultValue(resultQuantity.getValue());
+
+        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
+        entity.setOperation("ADD");
+        entity.setOperand1(dto.getThisQuantityDTO().getValue() + " " + dto.getThisQuantityDTO().getUnit());
+        entity.setOperand2(dto.getThatQuantityDTO().getValue() + " " + dto.getThatQuantityDTO().getUnit());
+        entity.setResult(String.valueOf(resultQuantity.getValue()));
+
+        repository.save(entity);
+
+        return response;
+    }
+
+    @Override
+    public ResponseDTO divideQuantities(QuantityInputDTO dto) {
+
+        Quantity<LengthUnit> q1 = buildQuantity(
+                dto.getThisQuantityDTO().getValue(),
+                dto.getThisQuantityDTO().getUnit()
+        );
+
+        Quantity<LengthUnit> q2 = buildQuantity(
+                dto.getThatQuantityDTO().getValue(),
+                dto.getThatQuantityDTO().getUnit()
+        );
+
+        double result = q1.divide(q2);
+
+        ResponseDTO response = new ResponseDTO();
+        response.setResultValue(result);
+
+        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
+        entity.setOperation("DIVIDE");
+        entity.setOperand1(dto.getThisQuantityDTO().getValue() + " " + dto.getThisQuantityDTO().getUnit());
+        entity.setOperand2(dto.getThatQuantityDTO().getValue() + " " + dto.getThatQuantityDTO().getUnit());
         entity.setResult(String.valueOf(result));
 
         repository.save(entity);
@@ -46,83 +117,46 @@ public class QuantityMeasurementService implements IQuantityMeasurementService {
     @Override
     public ResponseDTO convertQuantities(QuantityInputDTO dto) {
 
-        double value = dto.getThisQuantityDTO().getValue();
+        Quantity<LengthUnit> q1 = buildQuantity(
+                dto.getThisQuantityDTO().getValue(),
+                dto.getThisQuantityDTO().getUnit()
+        );
+
+        // convert to FEET (base unit)
+        Quantity<LengthUnit> converted = q1.convertTo(LengthUnit.FEET);
 
         ResponseDTO response = new ResponseDTO();
-        response.setResultValue(value);
+        response.setResultValue(converted.getValue());
 
         QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
         entity.setOperation("CONVERT");
-        entity.setOperand1(value + " " + dto.getThisQuantityDTO().getUnit());
-        entity.setOperand2("");
-        entity.setResult(String.valueOf(value));
+        entity.setOperand1(dto.getThisQuantityDTO().getValue() + " " + dto.getThisQuantityDTO().getUnit());
+        entity.setOperand2("FEET");
+        entity.setResult(String.valueOf(converted.getValue()));
 
         repository.save(entity);
 
         return response;
     }
 
-    @Override
-    public ResponseDTO addQuantities(QuantityInputDTO dto) {
-
-        double value1 = dto.getThisQuantityDTO().getValue();
-        double value2 = dto.getThatQuantityDTO().getValue();
-
-        double result = value1 + value2;
-
-        ResponseDTO response = new ResponseDTO();
-        response.setResultValue(result);
-
-        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
-        entity.setOperation("ADD");
-        entity.setOperand1(value1 + " " + dto.getThisQuantityDTO().getUnit());
-        entity.setOperand2(value2 + " " + dto.getThatQuantityDTO().getUnit());
-        entity.setResult(String.valueOf(result));
-
-        repository.save(entity);
-
-        return response;
-    }
-
-    @Override
-    public ResponseDTO divideQuantities(QuantityInputDTO dto) {
-
-        double value1 = dto.getThisQuantityDTO().getValue();
-        double value2 = dto.getThatQuantityDTO().getValue();
-
-        double result = value1 / value2;
-
-        ResponseDTO response = new ResponseDTO();
-        response.setResultValue(result);
-
-        QuantityMeasurementEntity entity = new QuantityMeasurementEntity();
-        entity.setOperation("DIVIDE");
-        entity.setOperand1(value1 + " " + dto.getThisQuantityDTO().getUnit());
-        entity.setOperand2(value2 + " " + dto.getThatQuantityDTO().getUnit());
-        entity.setResult(String.valueOf(result));
-
-        repository.save(entity);
-
-        return response;
-    }
-
+    // You can keep your previous implementations for history methods
     @Override
     public long getOperationCount(String operation) {
         return 0;
     }
 
     @Override
-    public List<ResponseDTO> getHistoryByOperation(String operation) {
-        return new ArrayList<>();
+    public java.util.List<ResponseDTO> getHistoryByOperation(String operation) {
+        return new java.util.ArrayList<>();
     }
 
     @Override
-    public List<ResponseDTO> getHistoryByType(String type) {
-        return new ArrayList<>();
+    public java.util.List<ResponseDTO> getHistoryByType(String type) {
+        return new java.util.ArrayList<>();
     }
 
     @Override
-    public List<ResponseDTO> getErrorHistory() {
-        return new ArrayList<>();
+    public java.util.List<ResponseDTO> getErrorHistory() {
+        return new java.util.ArrayList<>();
     }
 }
