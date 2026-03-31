@@ -3,12 +3,55 @@ package com.feetandinchmeasuments;
 public class QuantityMeasurementApp {
 
 	    public static void main(String[] args) {
+            
+	    	// UC9 - Weight Measurements
+	    	System.out.println("------------------------------------------------");
+	    	System.out.println("UC9 - Weight Measurements");
 
-<<<<<<< HEAD
-	        // UC1–UC4 → Equality
-=======
+	    	// Equality
+	    	QuantityWeight w1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+	    	QuantityWeight w2 = new QuantityWeight(1000.0, WeightUnit.GRAM);
+
+	    	System.out.println("1 KG equals 1000 G ? -> " + w1.equals(w2));
+
+	    	QuantityWeight w3 = new QuantityWeight(1.0, WeightUnit.POUND);
+	    	System.out.println("1 Pound equals 453.592 Gram ? -> " +
+	    	        w3.equals(new QuantityWeight(453.592, WeightUnit.GRAM)));
+
+	    	System.out.println("------------------------------------------------");
+
+	    	// Conversion
+	    	QuantityWeight converted =
+	    	        new QuantityWeight(2.0, WeightUnit.POUND)
+	    	                .convertTo(WeightUnit.KILOGRAM);
+
+	    	System.out.println("2 Pound in KG = " + converted);
+
+	    	QuantityWeight converted2 =
+	    	        new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+	    	                .convertTo(WeightUnit.POUND);
+
+	    	System.out.println("1 KG in Pound = " + converted2);
+
+	    	System.out.println("------------------------------------------------");
+
+	    	// Addition (implicit unit)
+	    	QuantityWeight addWeight =
+	    	        new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+	    	                .add(new QuantityWeight(500.0, WeightUnit.GRAM));
+
+	    	System.out.println("1 KG + 500 G = " + addWeight);
+
+	    	System.out.println("------------------------------------------------");
+
+	    	// Addition (explicit target unit)
+	    	QuantityWeight addTarget =
+	    	        new QuantityWeight(1.0, WeightUnit.KILOGRAM)
+	    	                .add(new QuantityWeight(1000.0, WeightUnit.GRAM), WeightUnit.GRAM);
+
+	    	System.out.println("1 KG + 1000 G in Gram = " + addTarget);
+	    	
 	        // UC1–UC4 - Equality
->>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
 	        QuantityLength inches = new QuantityLength(12.0, LengthUnit.INCHES);
 
@@ -23,22 +66,14 @@ public class QuantityMeasurementApp {
 
 	        System.out.println("------------------------------------------------");
 
-<<<<<<< HEAD
-	        // UC5 → Addition
-=======
 	        // UC5 - Addition
->>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength resultAdd =
 	                new QuantityLength(1.0, LengthUnit.FEET)
 	                        .add(new QuantityLength(11.0, LengthUnit.INCHES));
 
 	        System.out.println("1 Foot + 11 Inches = " + resultAdd);
 
-<<<<<<< HEAD
-	        // UC5 → Subtraction
-=======
 	        // UC5 - Subtraction
->>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength resultSub =
 	                new QuantityLength(2.0, LengthUnit.FEET)
 	                        .subtract(new QuantityLength(12.0, LengthUnit.INCHES));
@@ -47,11 +82,7 @@ public class QuantityMeasurementApp {
 
 	        System.out.println("------------------------------------------------");
 
-<<<<<<< HEAD
-	        // UC6 → Comparison
-=======
 	        // UC6 - Comparison
->>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength q1 = new QuantityLength(2.0, LengthUnit.FEET);
 	        QuantityLength q2 = new QuantityLength(18.0, LengthUnit.INCHES);
 
