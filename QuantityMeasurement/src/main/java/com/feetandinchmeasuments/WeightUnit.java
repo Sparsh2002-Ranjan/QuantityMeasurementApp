@@ -1,6 +1,6 @@
 package com.feetandinchmeasuments;
 
-public enum WeightUnit {
+public enum WeightUnit implements IMeasurable {
 
     KILOGRAM(1.0),
     GRAM(0.001),
@@ -16,13 +16,15 @@ public enum WeightUnit {
         return conversionFactor;
     }
 
-    // convert this unit to base unit (kg)
     public double convertToBaseUnit(double value) {
         return value * conversionFactor;
     }
 
-    // convert from base unit (kg) to this unit
     public double convertFromBaseUnit(double baseValue) {
         return baseValue / conversionFactor;
+    }
+
+    public String getUnitName() {
+        return name();
     }
 }
