@@ -1,6 +1,7 @@
 package com.quantitymeasurement.app.dto;
 
 public class QuantityInputDTO {
+<<<<<<< HEAD
     private QuantityDTO thisQuantityDTO;
     private QuantityDTO thatQuantityDTO;
     private String type; // LENGTH, TEMPERATURE, VOLUME
@@ -12,3 +13,25 @@ public class QuantityInputDTO {
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 }
+=======
+
+    private QuantityDTO thisQuantityDTO;
+    private QuantityDTO thatQuantityDTO;
+
+    public QuantityDTO getThisQuantityDTO() {
+        return thisQuantityDTO;
+    }
+
+    public void setThisQuantityDTO(QuantityDTO thisQuantityDTO) {
+        this.thisQuantityDTO = thisQuantityDTO;
+    }
+
+    public QuantityDTO getThatQuantityDTO() {
+        return thatQuantityDTO;
+    }
+
+    public void setThatQuantityDTO(QuantityDTO thatQuantityDTO) {
+        this.thatQuantityDTO = thatQuantityDTO;
+    }
+}
+>>>>>>> feature/UC17-Spring-Backend-for-Quantit-Measurement

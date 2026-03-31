@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDTO {
+<<<<<<< HEAD
     private String resultString;
     private Double resultValue;
     private String unit;
@@ -15,3 +16,25 @@ public class ResponseDTO {
     public String getUnit() { return unit; }
     public void setUnit(String unit) { this.unit = unit; }
 }
+=======
+
+    private String resultString;
+    private Double resultValue;
+
+    public String getResultString() {
+        return resultString;
+    }
+
+    public void setResultString(String resultString) {
+        this.resultString = resultString;
+    }
+
+    public Double getResultValue() {
+        return resultValue;
+    }
+
+    public void setResultValue(Double resultValue) {
+        this.resultValue = resultValue;
+    }
+}
+>>>>>>> feature/UC17-Spring-Backend-for-Quantit-Measurement

@@ -2,11 +2,15 @@ package com.quantitymeasurement.app;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> feature/UC17-Spring-Backend-for-Quantit-Measurement
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class QuantityMeasurementApp {
+<<<<<<< HEAD
     public static void main(String[] args) {
         SpringApplication.run(QuantityMeasurementApp.class, args);
     }
@@ -70,3 +74,10 @@ public class QuantityMeasurementApp {
     }
 }
 >>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
+=======
+
+    public static void main(String[] args) {
+        SpringApplication.run(QuantityMeasurementApp.class, args);
+    }
+}
+>>>>>>> feature/UC17-Spring-Backend-for-Quantit-Measurement

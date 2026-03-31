@@ -1,5 +1,6 @@
 package com.quantitymeasurement.app.entity;
 
+<<<<<<< HEAD
 import jakarta.persistence.*;
 
 @Entity
@@ -10,11 +11,17 @@ public class QuantityMeasurementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+=======
+public class QuantityMeasurementEntity {
+
+    private Long id;
+>>>>>>> feature/UC17-Spring-Backend-for-Quantit-Measurement
     private String operation;
     private String operand1;
     private String operand2;
     private String result;
 
+<<<<<<< HEAD
     @Column(name = "user_email")
     private String userEmail;
 
@@ -35,3 +42,45 @@ public class QuantityMeasurementEntity {
     public String getUserEmail() { return userEmail; }
     public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 }
+=======
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
+
+    public String getOperand1() {
+        return operand1;
+    }
+
+    public void setOperand1(String operand1) {
+        this.operand1 = operand1;
+    }
+
+    public String getOperand2() {
+        return operand2;
+    }
+
+    public void setOperand2(String operand2) {
+        this.operand2 = operand2;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+}
+>>>>>>> feature/UC17-Spring-Backend-for-Quantit-Measurement
