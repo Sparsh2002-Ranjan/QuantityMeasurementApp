@@ -24,7 +24,7 @@ public class QuantityLength implements Comparable<QuantityLength> {
         return unit.toBase(value);
     }
 
-    // ======== Private Utility for Addition (UC7 DRY principle) ========
+    // ======== UC7
     private static QuantityLength addInternal(
             QuantityLength q1,
             QuantityLength q2,

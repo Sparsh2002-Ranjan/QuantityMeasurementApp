@@ -4,7 +4,11 @@ public class QuantityMeasurementApp {
 
 	    public static void main(String[] args) {
 
+<<<<<<< HEAD
 	        // UC1–UC4 → Equality
+=======
+	        // UC1–UC4 - Equality
+>>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
 	        QuantityLength inches = new QuantityLength(12.0, LengthUnit.INCHES);
 
@@ -19,14 +23,22 @@ public class QuantityMeasurementApp {
 
 	        System.out.println("------------------------------------------------");
 
+<<<<<<< HEAD
 	        // UC5 → Addition
+=======
+	        // UC5 - Addition
+>>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength resultAdd =
 	                new QuantityLength(1.0, LengthUnit.FEET)
 	                        .add(new QuantityLength(11.0, LengthUnit.INCHES));
 
 	        System.out.println("1 Foot + 11 Inches = " + resultAdd);
 
+<<<<<<< HEAD
 	        // UC5 → Subtraction
+=======
+	        // UC5 - Subtraction
+>>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength resultSub =
 	                new QuantityLength(2.0, LengthUnit.FEET)
 	                        .subtract(new QuantityLength(12.0, LengthUnit.INCHES));
@@ -35,7 +47,11 @@ public class QuantityMeasurementApp {
 
 	        System.out.println("------------------------------------------------");
 
+<<<<<<< HEAD
 	        // UC6 → Comparison
+=======
+	        // UC6 - Comparison
+>>>>>>> feature/UC8-Refactoring-Unit-Enum-To-Standalone
 	        QuantityLength q1 = new QuantityLength(2.0, LengthUnit.FEET);
 	        QuantityLength q2 = new QuantityLength(18.0, LengthUnit.INCHES);
 
@@ -49,7 +65,7 @@ public class QuantityMeasurementApp {
 	            System.out.println("2 Feet equals 18 Inches");
 	       }
 	        
-	       // UC7
+	       // UC7 - Conversion
 	        System.out.println("------------------------------------------------");
 	        QuantityLength result =
 	                QuantityLength.add(
