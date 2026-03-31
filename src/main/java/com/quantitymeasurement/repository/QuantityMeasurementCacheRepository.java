@@ -19,11 +19,32 @@ public class QuantityMeasurementCacheRepository implements IQuantityMeasurementR
         return instance;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
     public void save(QuantityMeasurementEntity entity) {
         cache.add(entity);
     }
 
+<<<<<<< HEAD
     public List<QuantityMeasurementEntity> findAll() {
         return cache;
     }
+=======
+    @Override
+    public List<QuantityMeasurementEntity> getAllMeasurements() {
+        return cache;
+    }
+
+    @Override
+    public void deleteAll() {
+        cache.clear();
+    }
+
+    @Override
+    public void initializeDatabase() {
+        // No-op for cache repository
+    }
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
 }

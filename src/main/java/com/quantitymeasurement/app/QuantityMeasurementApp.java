@@ -1,6 +1,7 @@
 package com.quantitymeasurement.app;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -15,11 +16,18 @@ import com.quantitymeasurement.controller.QuantityMeasurementController;
 import com.quantitymeasurement.repository.QuantityMeasurementCacheRepository;
 import com.quantitymeasurement.service.QuantityMeasurementServiceImpl;
 import com.quantitymeasurement.dto.QuantityDTO;
+=======
+import com.quantitymeasurement.repository.*;
+import com.quantitymeasurement.service.*;
+import com.quantitymeasurement.app.util.ApplicationConfig;
+import org.h2.tools.Server;
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
 
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
+<<<<<<< HEAD
         QuantityMeasurementCacheRepository repository =
                 QuantityMeasurementCacheRepository.getInstance();
 
@@ -36,3 +44,29 @@ public class QuantityMeasurementApp {
     }
 }
 >>>>>>> feature/UC15-N-Tier
+=======
+        try {
+            Server.createWebServer("-web","-webAllowOthers","-webPort","8082").start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        IQuantityMeasurementRepository repository;
+
+        String repoType =
+                ApplicationConfig.getProperty("app.repository.type");
+
+        if ("database".equalsIgnoreCase(repoType)) {
+            repository = new QuantityMeasurementDatabaseRepository();
+        } else {
+            repository = QuantityMeasurementCacheRepository.getInstance();
+        }
+
+        IQuantityMeasurementService service =
+                new QuantityMeasurementServiceImpl(repository);
+
+        System.out.println("Application Started");
+
+    }
+}
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence

@@ -1,14 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 <<<<<<< HEAD
+<<<<<<< HEAD
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
 =======
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 >>>>>>> feature/UC15-N-Tier
+=======
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     <groupId>com.feetandinchesmeasurement</groupId>
     <artifactId>Feet-Inches-Measurement</artifactId>
@@ -24,6 +29,8 @@
         <maven.compiler.target>17</maven.compiler.target>
         <junit.version>5.10.0</junit.version>
 =======
+=======
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
     <groupId>com.quantitymeasurement</groupId>
     <artifactId>quantity-measurement</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -35,7 +42,10 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.10.2</junit.version>
+<<<<<<< HEAD
 >>>>>>> feature/UC15-N-Tier
+=======
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
     </properties>
 
     <dependencies>
@@ -47,6 +57,15 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
+=======
+        
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.224</version>
+        </dependency>
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
 
     </dependencies>
 
@@ -58,6 +77,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
+<<<<<<< HEAD
 <<<<<<< HEAD
                 <configuration>
                     <source>${maven.compiler.source}</source>
@@ -71,6 +91,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
 =======
+=======
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
             </plugin>
 
             <!-- Surefire Plugin (Runs Tests) -->
@@ -78,14 +100,21 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
+<<<<<<< HEAD
 >>>>>>> feature/UC15-N-Tier
+=======
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
             </plugin>
 
         </plugins>
     </build>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 </project>
 =======
 </project>
 >>>>>>> feature/UC15-N-Tier
+=======
+</project>
+>>>>>>> feature/UC16-Database-Integration-with-JDBC-for-Quantity-Measurement-Persistence
