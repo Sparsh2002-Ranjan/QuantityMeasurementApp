@@ -4,27 +4,28 @@ public enum WeightUnit implements IMeasurable {
 
     KILOGRAM(1.0),
     GRAM(0.001),
-    POUND(0.453592);
+    TONNE(1000);
 
     private final double conversionFactor;
+
+    SupportsArithmetic supportsArithmetic = () -> true;
 
     WeightUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
-    public double getConversionFactor() {
-        return conversionFactor;
-    }
-
-    public double convertToBaseUnit(double value) {
+    @Override
+    public double toBaseUnit(double value) {
         return value * conversionFactor;
     }
 
-    public double convertFromBaseUnit(double baseValue) {
-        return baseValue / conversionFactor;
+    @Override
+    public double fromBaseUnit(double value) {
+        return value / conversionFactor;
     }
 
-    public String getUnitName() {
-        return name();
+    @Override
+    public boolean supportsArithmetic() {
+        return supportsArithmetic.isSupported();
     }
 }

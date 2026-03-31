@@ -2,11 +2,19 @@ package com.feetandinchmeasuments;
 
 public interface IMeasurable {
 
-    double getConversionFactor();
+    double toBaseUnit(double value);
 
-    double convertToBaseUnit(double value);
+    double fromBaseUnit(double value);
 
-    double convertFromBaseUnit(double baseValue);
+    // Lambda indicating arithmetic support (default = true)
+    SupportsArithmetic supportsArithmetic = () -> true;
 
-    String getUnitName();
+    default boolean supportsArithmetic() {
+        return supportsArithmetic.isSupported();
+    }
+
+    // Validate arithmetic operation
+    default void validateOperationSupport(String operation) {
+        // default allows all
+    }
 }

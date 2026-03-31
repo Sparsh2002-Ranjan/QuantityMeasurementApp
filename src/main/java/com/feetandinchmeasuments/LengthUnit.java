@@ -2,33 +2,32 @@ package com.feetandinchmeasuments;
 
 public enum LengthUnit implements IMeasurable {
 
-    INCH(1.0 / 12),
-    FOOT(1.0),
-    YARD(3.0);
+    FEET(1.0),
+    INCHES(1.0 / 12.0),
+    YARDS(3.0),
+    CENTIMETERS(0.0328084),
+    METERS(3.28084);
 
     private final double conversionFactor;
+
+    SupportsArithmetic supportsArithmetic = () -> true;
 
     LengthUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
     @Override
-    public double getConversionFactor() {
-        return conversionFactor;
-    }
-
-    @Override
-    public double convertToBaseUnit(double value) {
+    public double toBaseUnit(double value) {
         return value * conversionFactor;
     }
 
     @Override
-    public double convertFromBaseUnit(double baseValue) {
-        return baseValue / conversionFactor;
+    public double fromBaseUnit(double value) {
+        return value / conversionFactor;
     }
 
     @Override
-    public String getUnitName() {
-        return this.name();
+    public boolean supportsArithmetic() {
+        return supportsArithmetic.isSupported();
     }
 }

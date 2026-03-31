@@ -8,27 +8,24 @@ public enum VolumeUnit implements IMeasurable {
 
     private final double conversionFactor;
 
+    SupportsArithmetic supportsArithmetic = () -> true;
+
     VolumeUnit(double conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
 
     @Override
-    public double getConversionFactor() {
-        return conversionFactor;
-    }
-
-    @Override
-    public double convertToBaseUnit(double value) {
+    public double toBaseUnit(double value) {
         return value * conversionFactor;
     }
 
     @Override
-    public double convertFromBaseUnit(double baseValue) {
-        return baseValue / conversionFactor;
+    public double fromBaseUnit(double value) {
+        return value / conversionFactor;
     }
 
     @Override
-    public String getUnitName() {
-        return this.name();
+    public boolean supportsArithmetic() {
+        return supportsArithmetic.isSupported();
     }
 }
