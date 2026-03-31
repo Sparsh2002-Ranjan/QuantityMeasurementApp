@@ -11,6 +11,10 @@ public class Quantity<U extends IMeasurable> {
         if (unit == null) {
             throw new IllegalArgumentException("Unit cannot be null");
         }
+        if (Double.isNaN(value) || Double.isInfinite(value)) {
+            throw new IllegalArgumentException("Invalid numeric value");
+        }
+
         this.value = value;
         this.unit = unit;
     }
@@ -23,57 +27,144 @@ public class Quantity<U extends IMeasurable> {
         return unit;
     }
 
-    // Convert to another unit
+    // =========================
+    // CONVERSION
+    // =========================
     public Quantity<U> convertTo(U targetUnit) {
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
         double baseValue = unit.convertToBaseUnit(value);
         double convertedValue = targetUnit.convertFromBaseUnit(baseValue);
-        return new Quantity<>(convertedValue, targetUnit);
+
+        return new Quantity<>(round(convertedValue), targetUnit);
     }
 
-    // Add quantities (result in first unit)
+    // =========================
+    // ADDITION (UC5–UC11)
+    // =========================
     public Quantity<U> add(Quantity<U> other) {
-        double baseValue1 = this.unit.convertToBaseUnit(this.value);
-        double baseValue2 = other.unit.convertToBaseUnit(other.value);
+        validate(other);
 
-        double sumBase = baseValue1 + baseValue2;
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
 
-        double resultValue = this.unit.convertFromBaseUnit(sumBase);
+        double sumBase = base1 + base2;
 
-        return new Quantity<>(resultValue, this.unit);
+        double result = unit.convertFromBaseUnit(sumBase);
+
+        return new Quantity<>(round(result), unit);
     }
 
-    // Add quantities with explicit target unit
     public Quantity<U> add(Quantity<U> other, U targetUnit) {
-        double baseValue1 = this.unit.convertToBaseUnit(this.value);
-        double baseValue2 = other.unit.convertToBaseUnit(other.value);
+        validate(other);
 
-        double sumBase = baseValue1 + baseValue2;
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
 
-        double resultValue = targetUnit.convertFromBaseUnit(sumBase);
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
 
-        return new Quantity<>(resultValue, targetUnit);
+        double sumBase = base1 + base2;
+
+        double result = targetUnit.convertFromBaseUnit(sumBase);
+
+        return new Quantity<>(round(result), targetUnit);
     }
 
+    // =========================
+    // SUBTRACTION (UC12)
+    // =========================
+    public Quantity<U> subtract(Quantity<U> other) {
+        validate(other);
+
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        double resultBase = base1 - base2;
+
+        double result = unit.convertFromBaseUnit(resultBase);
+
+        return new Quantity<>(round(result), unit);
+    }
+
+    public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
+        validate(other);
+
+        if (targetUnit == null) {
+            throw new IllegalArgumentException("Target unit cannot be null");
+        }
+
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        double resultBase = base1 - base2;
+
+        double result = targetUnit.convertFromBaseUnit(resultBase);
+
+        return new Quantity<>(round(result), targetUnit);
+    }
+
+    // =========================
+    // DIVISION (UC12)
+    // =========================
+    public double divide(Quantity<U> other) {
+        validate(other);
+
+        double divisorBase = other.unit.convertToBaseUnit(other.value);
+
+        if (Math.abs(divisorBase) < EPSILON) {
+            throw new ArithmeticException("Division by zero quantity");
+        }
+
+        double base1 = unit.convertToBaseUnit(value);
+
+        return base1 / divisorBase;
+    }
+
+    // =========================
+    // EQUALITY
+    // =========================
     @Override
     public boolean equals(Object obj) {
 
         if (this == obj) return true;
 
-        if (obj == null || !(obj instanceof Quantity<?>)) {
-            return false;
+        if (!(obj instanceof Quantity<?> other)) return false;
+
+        if (!unit.getClass().equals(other.unit.getClass())) return false;
+
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = ((IMeasurable) other.unit).convertToBaseUnit(other.value);
+
+        return Math.abs(base1 - base2) < EPSILON;
+    }
+
+    // =========================
+    // VALIDATION
+    // =========================
+    private void validate(Quantity<U> other) {
+
+        if (other == null) {
+            throw new IllegalArgumentException("Quantity cannot be null");
         }
 
-        Quantity<?> other = (Quantity<?>) obj;
-
-        // Prevent comparing different categories
-        if (!this.unit.getClass().equals(other.unit.getClass())) {
-            return false;
+        if (!unit.getClass().equals(other.unit.getClass())) {
+            throw new IllegalArgumentException("Different measurement categories");
         }
 
-        double baseValue1 = this.unit.convertToBaseUnit(this.value);
-        double baseValue2 = ((IMeasurable) other.unit).convertToBaseUnit(other.value);
+        if (Double.isNaN(other.value) || Double.isInfinite(other.value)) {
+            throw new IllegalArgumentException("Invalid numeric value");
+        }
+    }
 
-        return Math.abs(baseValue1 - baseValue2) < EPSILON;
+    // =========================
+    // ROUNDING
+    // =========================
+    private double round(double value) {
+        return Math.round(value * 100.0) / 100.0;
     }
 
     @Override

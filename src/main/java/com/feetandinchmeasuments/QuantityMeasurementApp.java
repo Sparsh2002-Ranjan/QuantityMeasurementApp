@@ -4,39 +4,82 @@ public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        // LENGTH
-        Quantity<LengthUnit> length1 = new Quantity<>(1.0, LengthUnit.FOOT);
-        Quantity<LengthUnit> length2 = new Quantity<>(12.0, LengthUnit.INCH);
+        demonstrateSubtraction();
 
-        System.out.println("Length Equality: " + length1.equals(length2));
+        demonstrateDivision();
+    }
 
-        Quantity<LengthUnit> lengthConverted = length1.convertTo(LengthUnit.INCH);
-        System.out.println("Converted Length: " + lengthConverted);
+    private static void demonstrateSubtraction() {
 
+        System.out.println("SUBTRACTION");
 
-        // WEIGHT
-        Quantity<WeightUnit> weight1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
-        Quantity<WeightUnit> weight2 = new Quantity<>(1000.0, WeightUnit.GRAM);
+        Quantity<LengthUnit> q1 =
+                new Quantity<>(10.0, LengthUnit.FOOT);
 
-        System.out.println("Weight Equality: " + weight1.equals(weight2));
+        Quantity<LengthUnit> q2 =
+                new Quantity<>(6.0, LengthUnit.INCH);
 
-        Quantity<WeightUnit> weightConverted = weight1.convertTo(WeightUnit.GRAM);
-        System.out.println("Converted Weight: " + weightConverted);
+        System.out.println(
+                q1.subtract(q2)
+        );
 
+        System.out.println(
+                q1.subtract(q2, LengthUnit.INCH)
+        );
 
-        // VOLUME (UC11)
-        Quantity<VolumeUnit> volume1 = new Quantity<>(1.0, VolumeUnit.LITRE);
-        Quantity<VolumeUnit> volume2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+        Quantity<WeightUnit> w1 =
+                new Quantity<>(10.0, WeightUnit.KILOGRAM);
 
-        System.out.println("Volume Equality: " + volume1.equals(volume2));
+        Quantity<WeightUnit> w2 =
+                new Quantity<>(5000.0, WeightUnit.GRAM);
 
-        Quantity<VolumeUnit> volumeConverted = volume1.convertTo(VolumeUnit.MILLILITRE);
-        System.out.println("Converted Volume: " + volumeConverted);
+        System.out.println(
+                w1.subtract(w2)
+        );
 
+        Quantity<VolumeUnit> v1 =
+                new Quantity<>(5.0, VolumeUnit.LITRE);
 
-        // ADDITION EXAMPLE
-        Quantity<VolumeUnit> sum = volume1.add(volume2);
+        Quantity<VolumeUnit> v2 =
+                new Quantity<>(500.0, VolumeUnit.MILLILITRE);
 
-        System.out.println("Volume Addition: " + sum);
+        System.out.println(
+                v1.subtract(v2)
+        );
+    }
+
+    private static void demonstrateDivision() {
+
+        System.out.println("\nDIVISION");
+
+        Quantity<LengthUnit> a =
+                new Quantity<>(10.0, LengthUnit.FOOT);
+
+        Quantity<LengthUnit> b =
+                new Quantity<>(2.0, LengthUnit.FOOT);
+
+        System.out.println(
+                a.divide(b)
+        );
+
+        Quantity<LengthUnit> c =
+                new Quantity<>(24.0, LengthUnit.INCH);
+
+        Quantity<LengthUnit> d =
+                new Quantity<>(2.0, LengthUnit.FOOT);
+
+        System.out.println(
+                c.divide(d)
+        );
+
+        Quantity<WeightUnit> w1 =
+                new Quantity<>(10.0, WeightUnit.KILOGRAM);
+
+        Quantity<WeightUnit> w2 =
+                new Quantity<>(5.0, WeightUnit.KILOGRAM);
+
+        System.out.println(
+                w1.divide(w2)
+        );
     }
 }
